@@ -18,7 +18,7 @@ pnpm prisma generate
 pnpm start:dev
 pnpm prisma migrate dev --name <说明>
 pnpm lint
-pnpm exec tsc --noEmit
+pnpm typecheck        # package.json 中定义为 tsc --noEmit；CI 只运行名为 typecheck 的脚本
 pnpm test
 pnpm test:e2e
 ```

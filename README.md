@@ -17,21 +17,33 @@
 
 ## 使用方法
 
-本仓库是私有仓库。安装前，本机的 git 要能访问它（已登录 GitHub 即可）；也可以设置环境变量 `GIGET_AUTH` 为有读取权限的 GitHub token。
+本仓库是私有仓库，registry 必须用 SSH 形式（`git@github.com:...`）。Trellis 0.6.17 读取 `gh:` 形式时不带认证，私有仓库会报 “Registry has no index.json”，设置 `GIGET_AUTH` 也没有用。
+
+安装前先确认本机 SSH 能访问 GitHub：
+
+```bash
+ssh -T git@github.com
+```
+
+网络不通 22 端口时，在 `~/.ssh/config` 中把 `github.com` 指向 `ssh.github.com` 的 443 端口。
 
 先安装公共规范，再按项目追加技术栈规范：
 
 ```bash
+# 按团队成员实际使用的工具填写，所有命令保持一致
+TOOLS="--claude --cursor --codex"
+REG="git@github.com:TIanle-art/spec-templates/marketplace"
+
 # 1. 公共规范（所有项目）
-trellis init --claude --cursor --codex \
-  --registry gh:TIanle-art/spec-templates/marketplace --template team-base
+trellis init $TOOLS --registry "$REG" --template team-base
 
 # 2. 按项目追加，例如 FastAPI + 网页
-trellis init --registry gh:TIanle-art/spec-templates/marketplace --template team-fastapi --append
-trellis init --registry gh:TIanle-art/spec-templates/marketplace --template team-web --append
+trellis init $TOOLS --registry "$REG" --template team-fastapi --append
+trellis init $TOOLS --registry "$REG" --template team-web --append
 ```
 
-`--claude --cursor --codex` 按团队成员实际使用的工具选择，可用的还有 `--copilot`、`--opencode`、`--kimi`，以 `trellis init --help` 为准。
+- `TOOLS` 可用的还有 `--copilot`、`--opencode`、`--kimi`，以 `trellis init --help` 为准。
+- 追加命令也要带上同样的 `TOOLS`，否则 Trellis 会进入交互选择，加 `-y` 时还会默认配置 Cursor。
 
 安装后：
 
@@ -41,10 +53,11 @@ trellis init --registry gh:TIanle-art/spec-templates/marketplace --template team
 
 ## 固定版本
 
-默认安装 `main` 分支的最新内容。需要固定版本时，在仓库路径后加标签，例如：
+默认安装 `main` 分支的最新内容。需要固定版本时，在地址后加标签，例如：
 
 ```bash
-trellis init --registry gh:TIanle-art/spec-templates/marketplace#v1 --template team-base
+REG="git@github.com:TIanle-art/spec-templates/marketplace#v1"
+trellis init $TOOLS --registry "$REG" --template team-base
 ```
 
 模板有较大变动时打新的标签（`v1`、`v2`……），并在团队频道说明变化。已有项目不会自动更新，需要时由技术负责人对比后手动合并。

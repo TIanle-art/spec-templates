@@ -17,22 +17,14 @@
 
 ## 使用方法
 
-本仓库是私有仓库，registry 必须用 SSH 形式（`git@github.com:...`）。Trellis 0.6.17 读取 `gh:` 形式时不带认证，私有仓库会报 “Registry has no index.json”，设置 `GIGET_AUTH` 也没有用。
-
-安装前先确认本机 SSH 能访问 GitHub：
-
-```bash
-ssh -T git@github.com
-```
-
-网络不通 22 端口时，在 `~/.ssh/config` 中把 `github.com` 指向 `ssh.github.com` 的 443 端口。
+本仓库是公开仓库，安装时不需要任何认证。不要改回私有：Trellis 0.6.17 读取 `gh:` 形式的 registry 时不带认证，私有仓库会报 “Registry has no index.json”。因为公开，这里不写客户信息、内网地址和密钥。
 
 先安装公共规范，再按项目追加技术栈规范：
 
 ```bash
 # 按团队成员实际使用的工具填写，所有命令保持一致
 TOOLS="--claude --cursor --codex"
-REG="git@github.com:TIanle-art/spec-templates/marketplace"
+REG="gh:TIanle-art/spec-templates/marketplace"
 
 # 1. 公共规范（所有项目）
 trellis init $TOOLS --registry "$REG" --template team-base
@@ -56,7 +48,7 @@ trellis init $TOOLS --registry "$REG" --template team-web --append
 默认安装 `main` 分支的最新内容。需要固定版本时，在地址后加标签，例如：
 
 ```bash
-REG="git@github.com:TIanle-art/spec-templates/marketplace#v1"
+REG="gh:TIanle-art/spec-templates/marketplace#v1"
 trellis init $TOOLS --registry "$REG" --template team-base
 ```
 

@@ -22,25 +22,29 @@
 先安装公共规范，再按项目追加技术栈规范：
 
 ```bash
-# 按团队成员实际使用的工具填写，所有命令保持一致
-TOOLS="--claude --cursor --codex"
+# 按团队成员实际使用的工具填写，所有命令保持一致。
+# 用数组保存参数，bash 和 zsh 都能正确拆分；写成 TOOLS="--claude --cursor" 再用 $TOOLS，
+# zsh 不会按空格拆分，会报 unknown option
+TOOLS=(--claude --cursor --codex)
 REG="gh:TIanle-art/spec-templates/marketplace"
 
-# 1. 公共规范（所有项目）
-trellis init $TOOLS --registry "$REG" --template team-base
+# 1. 公共规范（所有项目）。必须加 -y，否则会交互询问，非交互环境下崩溃
+trellis init -y -u <你的名字> "${TOOLS[@]}" --registry "$REG" --template team-base
 
 # 2. 按项目追加，例如 FastAPI + 网页
-trellis init $TOOLS --registry "$REG" --template team-fastapi --append
-trellis init $TOOLS --registry "$REG" --template team-web --append
+trellis init -y "${TOOLS[@]}" --registry "$REG" --template team-fastapi --append
+trellis init -y "${TOOLS[@]}" --registry "$REG" --template team-web --append
 ```
 
 - `TOOLS` 可用的还有 `--copilot`、`--opencode`、`--kimi`，以 `trellis init --help` 为准。
-- 追加命令也要带上同样的 `TOOLS`，否则 Trellis 会进入交互选择，加 `-y` 时还会默认配置 Cursor。
+- 追加命令也要带上同样的 `TOOLS` 和 `-y`，否则 Trellis 会进入交互选择。
+- 不要对同一个项目重复运行第一条命令：没有 `--template` 的 `trellis init` 会安装占位规范，之后的 `--append` 因为文件已存在而跳过公司规范。
+- `--append` 不覆盖已有的规范文件，但会改写 `.trellis/.template-hashes.json`（只剩这次追加的文件）和 `.trellis/config.yaml` 里的模板名，追加后要合并两次的 hash 记录。详见《公司项目脚手架规范》6.4。
 
 安装后：
 
 1. 检查 `.trellis/spec/` 中的文件，把项目特有的内容补进去。
-2. 检查 Trellis 生成的 `AGENTS.md`，把 handbook 中 `project-kit/AGENTS.md` 的公司规则合并进去。
+2. 复制 handbook 的 `project-kit/`（排除它的 `AGENTS.md`），再把 `project-kit/AGENTS.md` 的公司规则追加到 Trellis 生成的 `AGENTS.md` 里。顺序是先 `trellis init`，再复制 project-kit；步骤见 handbook 的 `project-kit/README.md`。
 3. 提交 `.trellis/` 和相关文件，提 PR。
 
 ## 固定版本

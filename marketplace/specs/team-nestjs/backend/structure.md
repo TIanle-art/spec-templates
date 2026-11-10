@@ -34,6 +34,7 @@ services/api/src/
 ## 风格
 
 - 开启 TypeScript 严格模式，不使用 `any`；确实需要时写明原因。
+- 检查和格式用 Biome（全公司 TS 项目统一）。Biome 不覆盖依赖类型信息的规则，类型错误靠 `tsc --noEmit`，所以 `typecheck` 不能省。装饰器的解析配置在 NestJS 模板中验证。
 - 全局 `ValidationPipe` 开启 `whitelist` 和 `forbidNonWhitelisted`。
 - 外部调用都设置超时，并支持 `AbortSignal`。
 - 不吞掉异常；需要转换时，抛出项目定义的业务异常，由全局过滤器转成统一的错误格式。

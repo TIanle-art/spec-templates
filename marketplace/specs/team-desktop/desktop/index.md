@@ -1,6 +1,6 @@
 # 桌面软件规范
 
-技术栈：Electron、electron-vite、React、TypeScript、SQLite、better-sqlite3、Drizzle。支持 Windows、macOS 和 Linux。
+技术栈：Electron、electron-vite、React、TypeScript、SQLite、better-sqlite3、Drizzle。支持 Windows、macOS 和 Linux。工具链（全公司 TS 项目统一）：Biome（检查和格式，类型错误靠 `tsc --noEmit`）、Vitest（单元测试）、Playwright（端到端冒烟）、`@hey-api/openapi-ts`（有云端接口时生成 `packages/api-client`）。
 
 | 文件 | 什么时候读 |
 |---|---|

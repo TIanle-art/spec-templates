@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "templates": [
+    {
+      "id": "team-base",
+      "type": "spec",
+      "name": "团队公共规范",
+      "description": "所有项目必装：Git、测试、安全、AI 使用和开发指南",
+      "path": "marketplace/specs/team-base",
+      "tags": ["base"]
+    },
+    {
+      "id": "team-fastapi",
+      "type": "spec",
+      "name": "FastAPI 后端",
+      "description": "Python、FastAPI、SQLAlchemy、Alembic、PostgreSQL",
+      "path": "marketplace/specs/team-fastapi",
+      "tags": ["backend", "python", "fastapi"]
+    },
+    {
+      "id": "team-nestjs",
+      "type": "spec",
+      "name": "NestJS 后端",
+      "description": "TypeScript、NestJS、Prisma、PostgreSQL",
+      "path": "marketplace/specs/team-nestjs",
+      "tags": ["backend", "typescript", "nestjs"]
+    },
+    {
+      "id": "team-web",
+      "type": "spec",
+      "name": "网页前端",
+      "description": "React、TypeScript、Vite、Tailwind CSS、shadcn/ui、TanStack Query",
+      "path": "marketplace/specs/team-web",
+      "tags": ["frontend", "react"]
+    },
+    {
+      "id": "team-miniapp",
+      "type": "spec",
+      "name": "微信小程序",
+      "description": "Taro 4、React、TypeScript",
+      "path": "marketplace/specs/team-miniapp",
+      "tags": ["frontend", "miniapp", "taro"]
+    },
+    {
+      "id": "team-desktop",
+      "type": "spec",
+      "name": "桌面软件",
+      "description": "Electron、React、TypeScript、SQLite、Drizzle，支持 Windows、macOS、Linux",
+      "path": "marketplace/specs/team-desktop",
+      "tags": ["desktop", "electron"]
+    }
+  ]
+}
